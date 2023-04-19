@@ -3,7 +3,8 @@ import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-public class MyArrayList<T> implements Iterable<T> {
+@SuppressWarnings("unchecked")
+public class MyArrayList<T> implements Iterable<T>, MyCustomList<T> {
 
     private final int SIZE = 50;
     private T[] list;
@@ -18,17 +19,13 @@ public class MyArrayList<T> implements Iterable<T> {
 
         if (current >= SIZE) {
             T[] array = (T[]) new Object[list.length + SIZE];
-            System.arraycopy(array, 0, list, 0, list.length);
+            System.arraycopy(list, 0, array, 0, list.length);
             list = array;
         }
 
         list[current++] = obj;
 
         return true;
-    }
-
-    public int size() {
-        return current;
     }
 
     public T get(int num) {
@@ -46,8 +43,19 @@ public class MyArrayList<T> implements Iterable<T> {
         return -1;
     }
 
-    public boolean isEmpty() {
-        return current == 0;
+    public T remove(int targetNum) {
+        T target = get(targetNum);
+
+        for (int i = targetNum; i < current; i++) {
+            list[i] = list[i + 1];
+        }
+
+        current--;
+        return target;
+    }
+
+    public int size() {
+        return current;
     }
 
     public boolean contains(T target) {
@@ -59,14 +67,8 @@ public class MyArrayList<T> implements Iterable<T> {
         list = (T[]) new Object[SIZE];
     }
 
-    public T remove(int targetNum) {
-        T target = get(targetNum);
-
-        for (int i = targetNum; i < current; i++) {
-            list[i] = list[i + 1];
-        }
-        current--;
-        return target;
+    public boolean isEmpty() {
+        return size() == 0;
     }
 
     @Override
