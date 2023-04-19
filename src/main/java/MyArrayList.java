@@ -1,6 +1,9 @@
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
-public class MyArrayList<T> {
+public class MyArrayList<T> implements Iterable<T> {
 
     private final int SIZE = 50;
     private T[] list;
@@ -15,9 +18,10 @@ public class MyArrayList<T> {
 
         if (current >= SIZE) {
             T[] array = (T[]) new Object[list.length + SIZE];
-            System.arraycopy(array,0,list,0,list.length);
+            System.arraycopy(array, 0, list, 0, list.length);
             list = array;
         }
+
         list[current++] = obj;
 
         return true;
@@ -28,10 +32,11 @@ public class MyArrayList<T> {
     }
 
     public T get(int num) {
-        if ( num > current)
+        if (num > current)
             throw new IndexOutOfBoundsException("범위 초과");
         return list[num];
     }
+
     public int indexOf(T target) {
         for (int i = 0; i < current; i++) {
             if (list[i].equals(target)) {
@@ -42,15 +47,15 @@ public class MyArrayList<T> {
     }
 
     public boolean isEmpty() {
-        return this.current == 0;
+        return current == 0;
     }
 
     public boolean contains(T target) {
-        return this.indexOf(target) != -1;
+        return indexOf(target) != -1;
     }
 
     public void clear() {
-        this.current = 0;
+        current = 0;
         list = (T[]) new Object[SIZE];
     }
 
@@ -58,9 +63,24 @@ public class MyArrayList<T> {
         T target = get(targetNum);
 
         for (int i = targetNum; i < current; i++) {
-            list[i-1] = list[i];
+            list[i] = list[i + 1];
         }
         current--;
         return target;
+    }
+
+    @Override
+    public Iterator<T> iterator() {
+        return Arrays.stream(list).limit(current).iterator();
+    }
+
+    @Override
+    public void forEach(Consumer<? super T> action) {
+        Iterable.super.forEach(action);
+    }
+
+    @Override
+    public Spliterator<T> spliterator() {
+        return Iterable.super.spliterator();
     }
 }

@@ -25,6 +25,9 @@ class MyArrayListTest {
         list.add("Element3");
         assertEquals("Element2", list.remove(1));
         assertEquals(2, list.size());
+        for (String o : list) {
+            System.out.println(o);
+        }
     }
 
     @Test
@@ -74,9 +77,9 @@ class MyArrayListTest {
     @Test
     void sizeTest() {
         for (int i = 0; i < 70; i++) {
-            list.add("hello"+i);
+            list.add("hello" + i);
         }
-        assertEquals(70,list.size());
+        assertEquals(70, list.size());
 
     }
 }
