@@ -3,14 +3,15 @@ import java.util.Iterator;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 
-@SuppressWarnings("unchecked")
 public class MyArrayList<T> implements Iterable<T>, MyCustomList<T> {
 
     private final int SIZE = 50;
+
     private T[] list;
     private int current;
-
+    @SuppressWarnings("unchecked")
     public MyArrayList() {
+
         list = (T[]) new Object[SIZE];
         current = 0;
     }
@@ -18,6 +19,8 @@ public class MyArrayList<T> implements Iterable<T>, MyCustomList<T> {
     public boolean add(T obj) {
 
         if (current >= SIZE) {
+
+            @SuppressWarnings("unchecked")
             T[] array = (T[]) new Object[list.length + SIZE];
             System.arraycopy(list, 0, array, 0, list.length);
             list = array;
@@ -61,10 +64,11 @@ public class MyArrayList<T> implements Iterable<T>, MyCustomList<T> {
     public boolean contains(T target) {
         return indexOf(target) != -1;
     }
-
+    @SuppressWarnings("unchecked")
     public void clear() {
         current = 0;
-        list = (T[]) new Object[SIZE];
+
+        list =  (T[]) new Object[SIZE];
     }
 
     public boolean isEmpty() {
@@ -85,4 +89,5 @@ public class MyArrayList<T> implements Iterable<T>, MyCustomList<T> {
     public Spliterator<T> spliterator() {
         return Iterable.super.spliterator();
     }
+
 }

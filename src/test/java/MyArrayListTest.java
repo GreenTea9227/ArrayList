@@ -2,6 +2,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.CountDownLatch;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -76,13 +79,13 @@ class MyArrayListTest {
         assertTrue(list.isEmpty());
     }
 
+
     @Test
     void sizeTest() {
         for (int i = 0; i < 70; i++) {
             list.add("hello" + i);
         }
         assertEquals(70, list.size());
-
 
     }
 
